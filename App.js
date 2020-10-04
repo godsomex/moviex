@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, {css} from '@emotion/native';
 import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import Categories from './components/Categories';
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
         <Scroll contentInsetAdjustmentBehavior="automatic">
           <Container>
             <Title> Moviex App</Title>
+            <Categories />
           </Container>
         </Scroll>
       </SafeAreaView>
