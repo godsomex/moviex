@@ -12,9 +12,9 @@ import {
   FlatList,
 } from 'react-native';
 
-import {categoryMock, categoryColor, transformCategory} from '../utilities/';
+import {categoryMock, categoryColor, transformCategory} from '../utilities';
 
-function Categories() {
+function Categories({navigation}) {
   const [categories] = useState(categoryMock);
   const category = transformCategory(categories.data, categoryColor);
 
@@ -32,6 +32,12 @@ function Categories() {
         renderItem={({item}) => {
           return (
             <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('MovieList', {
+                  id: item.id,
+                  title: item.title,
+                })
+              }
               style={[styles.card, {backgroundColor: item.color}]}>
               <View style={styles.cardHeader}>
                 <Text style={styles.title}>{item.title}</Text>

@@ -1,38 +1,25 @@
 import React from 'react';
 import styled, {css} from '@emotion/native';
-import {SafeAreaView, ScrollView, View, Text} from 'react-native';
-import Categories from './components/Categories';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import Categories from './screens/Categories';
+import MovieList from './screens/MovieList';
 
 const App = () => {
+  const RootStack = createStackNavigator();
+
   return (
     <>
-      <SafeAreaView>
-        <Scroll contentInsetAdjustmentBehavior="automatic">
-          <Container>
-            <Title> Moviex App</Title>
-            <Categories />
-          </Container>
-        </Scroll>
-      </SafeAreaView>
+      <NavigationContainer>
+        <RootStack.Navigator>
+          <RootStack.Screen name="Category" component={Categories} />
+          <RootStack.Screen name="MovieList" component={MovieList} />
+        </RootStack.Navigator>
+      </NavigationContainer>
     </>
   );
 };
 
 export default App;
-
-const Container = styled.View`
-  flex: 1;
-  background-color: grey;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.Text`
-  font-size: 20px;
-  font-weight: 500;
-  color: blue;
-`;
-
-const Scroll = styled.ScrollView`
-  backgroundcolor: Colors.lighter;
-`;
