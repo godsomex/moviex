@@ -1,11 +1,10 @@
 import React from 'react';
-import styled, {css} from '@emotion/native';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Categories from './screens/Categories';
 import MovieList from './screens/MovieList';
+import MovieDetails from './screens/MovieDetails';
 
 const App = () => {
   const RootStack = createStackNavigator();
@@ -16,6 +15,7 @@ const App = () => {
         <RootStack.Navigator>
           <RootStack.Screen name="Category" component={Categories} />
           <RootStack.Screen name="MovieList" component={MovieList} />
+          <RootStack.Screen name="MovieDetails" component={MovieDetails} />
         </RootStack.Navigator>
       </NavigationContainer>
     </>

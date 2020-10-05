@@ -9,6 +9,7 @@ import {
   ScrollView,
   TextInput,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import {movieList} from '../utilities/index';
@@ -16,7 +17,6 @@ import {movieList} from '../utilities/index';
 function MovieList(props) {
   const [state] = useState(movieList);
   const [searchterm, setSearchterm] = useState('');
-  console.log(props.route.params.id);
   const genreId = props.route.params.id;
 
   const clickEventListener = (term) => {
@@ -60,16 +60,24 @@ function MovieList(props) {
         data={state.results}
         renderItem={({item}) => {
           return (
-            <View style={styles.notificationBox}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                }}
-              />
+            <TouchableOpacity
+              onPress={() =>
+                props.navigation.navigate('MovieDetails', {
+                  item,
+                })
+              }
+              style={[styles.card, {backgroundColor: item.color}]}>
+              <View style={styles.notificationBox}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                  }}
+                />
 
-              <Text style={styles.description}>{item.title}</Text>
-            </View>
+                <Text style={styles.description}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />
