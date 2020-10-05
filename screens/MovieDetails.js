@@ -8,34 +8,30 @@ import {
   ScrollView,
 } from 'react-native';
 
-function MovieDetails() {
+function MovieDetails({route: {params}}) {
+  const details = params.item;
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Money Heist</Text>
+          <Text style={styles.headerTitle}>{details.title}</Text>
         </View>
 
         <View style={styles.movieContent}>
-          <Text style={styles.movieTitle}>
-            From spain comes this spainish buster
-          </Text>
+          <Text style={styles.movieTitle}>{details.original_title}</Text>
 
-          <Text style={styles.movieDescription}>
-            From spain comes this spainish buster. From spain comes this
-            spainish buster
-          </Text>
+          <Text style={styles.movieDescription}>{details.overview}</Text>
 
-          <Text style={styles.tags}>goc, me, action, goc, me, action.</Text>
+          <Text style={styles.tags}>{details.original_language}</Text>
 
-          <Text style={styles.date}>2020-10-05 </Text>
+          <Text style={styles.date}>Release Date: {details.release_date} </Text>
 
           <View style={styles.movie}>
             <Image
               style={styles.avatar}
               source={{
-                uri:
-                  'https://image.tmdb.org/t/p/w500/AboUXTrDWEi0PuZUqaft0iwBTm7.jpg',
+                uri: `https://image.tmdb.org/t/p/w500${details.poster_path}`,
               }}
             />
           </View>
