@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -6,19 +7,15 @@ import {
   TouchableHighlight,
   Image,
   Alert,
-  ScrollView,
   TextInput,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
 
-import {movieList} from '../utilities/index';
-
 function MovieList(props) {
-  const [state] = useState(movieList);
+  const list = useSelector((state) => state.movie.movieList.results);
   const [searchterm, setSearchterm] = useState('');
   const genreId = props.route.params.id;
-
   const clickEventListener = (term) => {
     Alert.alert('Alert', 'Button pressed ' + genreId + term);
   };
@@ -57,7 +54,7 @@ function MovieList(props) {
       <FlatList
         style={styles.notificationList}
         enableEmptySections={true}
-        data={state.results}
+        data={list}
         renderItem={({item}) => {
           return (
             <TouchableOpacity

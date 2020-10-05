@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import styled, {css} from '@emotion/native';
 
 import {
@@ -7,16 +8,14 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Alert,
-  ScrollView,
   FlatList,
 } from 'react-native';
 
-import {categoryMock, categoryColor, transformCategory} from '../utilities';
+import {categoryColor, transformCategory} from '../utilities';
 
 function Categories({navigation}) {
-  const [categories] = useState(categoryMock);
-  const category = transformCategory(categories.data, categoryColor);
+  const movies = useSelector((state) => state.movie);
+  const category = transformCategory(movies.categories, categoryColor);
 
   return (
     <Container>
