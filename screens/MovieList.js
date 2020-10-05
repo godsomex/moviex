@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -12,13 +12,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {getMovieList} from '../redux/actions/movieActions';
+
 function MovieList(props) {
+  const dispatch = useDispatch();
   const list = useSelector((state) => state.movie.movieList.results);
   const [searchterm, setSearchterm] = useState('');
   const genreId = props.route.params.id;
   const clickEventListener = (term) => {
     Alert.alert('Alert', 'Button pressed ' + genreId + term);
   };
+
+  useEffect(() => {
+    dispatch(getMovieList(genreId));
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
