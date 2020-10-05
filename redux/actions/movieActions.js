@@ -25,10 +25,10 @@ export const getCategories = () => async (dispatch) => {
 };
 
 //GET  MOVIELIST
-export const getMovieList = (id) => async (dispatch) => {
+export const getMovieList = (id, page) => async (dispatch) => {
   try {
     const result = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=e84c2c035e02e7db2c43f70bc718f3e5&with_genres=${id}&page=1`,
+      `https://api.themoviedb.org/3/discover/movie?api_key=e84c2c035e02e7db2c43f70bc718f3e5&with_genres=${id}&page=${page}`,
       {
         method: GET,
       },

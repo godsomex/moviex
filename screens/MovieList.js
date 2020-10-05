@@ -10,22 +10,36 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import {getMovieList} from '../redux/actions/movieActions';
 
 function MovieList(props) {
   const dispatch = useDispatch();
-  const list = useSelector((state) => state.movie.movieList.results);
+  const movielist = useSelector((state) => state.movie.movieList.results);
+  const [list, setList] = useState(movielist);
   const [searchterm, setSearchterm] = useState('');
+  const [page, setPage] = useState(1);
+
   const genreId = props.route.params.id;
   const clickEventListener = (term) => {
     Alert.alert('Alert', 'Button pressed ' + genreId + term);
   };
 
   useEffect(() => {
-    dispatch(getMovieList(genreId));
-  }, [dispatch]);
+    getData();
+  }, [page]);
+
+  const getData = () => {
+    dispatch(getMovieList(genreId, page));
+    setList([...list, ...movielist]);
+  };
+
+  const handleEnd = () => {
+    setPage((page) => page + 1);
+    getData();
+  };
 
   return (
     <View style={styles.container}>
@@ -59,6 +73,7 @@ function MovieList(props) {
       </View>
 
       <FlatList
+        keyExtractor={(x, i) => i}
         style={styles.notificationList}
         enableEmptySections={true}
         data={list}
@@ -84,6 +99,9 @@ function MovieList(props) {
             </TouchableOpacity>
           );
         }}
+        onEndReached={() => handleEnd()}
+        onEndReachedThreshold={0}
+        ListFooterComponent={() => <ActivityIndicator size="large" animating />}
       />
     </View>
   );
