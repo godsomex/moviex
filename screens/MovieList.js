@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   StyleSheet,
@@ -13,7 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {getMovieList} from '../redux/actions/movieActions';
+import {getMovieList, searchMovieList} from '../redux/actions/movieActions';
 
 function MovieList(props) {
   const dispatch = useDispatch();
@@ -23,18 +23,18 @@ function MovieList(props) {
   const [page, setPage] = useState(1);
 
   const genreId = props.route.params.id;
-  const clickEventListener = (term) => {
-    Alert.alert('Alert', 'Button pressed ' + genreId + term);
+  const clickEventListener = () => {
+    setPage(0);
+    setPage((page) => page + 1);
+    dispatch(searchMovieList(searchterm, page));
   };
-
-  useEffect(() => {
-    getData();
-  }, [page]);
 
   const getData = () => {
     dispatch(getMovieList(genreId, page));
-    setList([...list, ...movielist]);
+    setList((list) => [...list, ...movielist]);
   };
+
+  useEffect(getData, [page]);
 
   const handleEnd = () => {
     setPage((page) => page + 1);
@@ -62,7 +62,7 @@ function MovieList(props) {
 
         <TouchableHighlight
           style={styles.saveButton}
-          onPress={() => clickEventListener(searchterm)}>
+          onPress={() => clickEventListener()}>
           <Image
             style={[styles.icon, styles.iconBtnSearch]}
             source={{
@@ -73,10 +73,10 @@ function MovieList(props) {
       </View>
 
       <FlatList
-        keyExtractor={(x, i) => i}
+        keyExtractor={(item, index) => index.toString()}
         style={styles.notificationList}
         enableEmptySections={true}
-        data={list}
+        data={page === 1 ? movielist : list}
         renderItem={({item}) => {
           return (
             <TouchableOpacity

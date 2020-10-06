@@ -1,4 +1,9 @@
-import {MOVIE_ERROR, GET_CATEGORIES, GET_MOVIE_LIST} from './constants';
+import {
+  MOVIE_ERROR,
+  GET_CATEGORIES,
+  GET_MOVIE_LIST,
+  SEARCH_MOVIE,
+} from './constants';
 
 const GET = 'GET';
 
@@ -36,6 +41,28 @@ export const getMovieList = (id, page) => async (dispatch) => {
     const data = await result.json();
     dispatch({
       type: GET_MOVIE_LIST,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: MOVIE_ERROR,
+      payload: err.response,
+    });
+  }
+};
+
+//SEARCH  MOVIELIST
+export const searchMovieList = (searchWord, page) => async (dispatch) => {
+  try {
+    const result = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${searchWord}&api_key=e84c2c035e02e7db2c43f70bc718f3e5&page=${page}`,
+      {
+        method: GET,
+      },
+    );
+    const data = await result.json();
+    dispatch({
+      type: SEARCH_MOVIE,
       payload: data,
     });
   } catch (err) {
