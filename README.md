@@ -1,10 +1,10 @@
 # moviex
 
 ## Install
-for installing download/clone:
+for installing download/clone:https://github.com/godsomex/moviex.git
 - git clone 
 - cd into the project:
-- cd react-native-boilerplate
+- cd moviex
 
 ## install all dependencies:
 - yarn
