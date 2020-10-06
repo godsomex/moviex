@@ -36,7 +36,7 @@ function MovieDetails({route: {params}}) {
             />
           </View>
           <TouchableOpacity style={styles.likeButton}>
-            <Text style={styles.likeButtonText}>Like</Text>
+            <Text style={styles.likeButtonText}>Add to favorites</Text>
           </TouchableOpacity>
         </View>
       </View>
